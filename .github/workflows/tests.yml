@@ -487,7 +487,10 @@ jobs:
       - uses: ./.github/actions/setup-rust
       - run: python lints/test_debian_compatibility.py
 
+  # CodSpeed and Codecov only accept uploads from oxigraph/oxigraph. On a fork these
+  # jobs would run to the end (CodSpeed for hours) and then fail with 401 / "Repository not found".
   codspeed:
+    if: github.repository == 'oxigraph/oxigraph'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -513,6 +516,7 @@ jobs:
           mode: simulation
 
   codspeed_testsuite:
+    if: github.repository == 'oxigraph/oxigraph'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -532,6 +536,7 @@ jobs:
           mode: simulation
 
   codecov:
+    if: github.repository == 'oxigraph/oxigraph'
     runs-on: ubuntu-latest
     permissions:
       contents: read
